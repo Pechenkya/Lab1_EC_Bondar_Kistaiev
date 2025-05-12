@@ -26,8 +26,8 @@ class EllipticCurve:
             right = (pow(X, 3, self.p) + self.a * X + self.b) % self.p
 
             if jacobi_symbol(right, self.p) == 1:
-                Y = sqrt_modp(right, self.p)
-
+                Y = random.choice(sqrt_modp(right, self.p))
+                
                 return EllipticCurvePoint(X, Y, 1, self)
 
 
