@@ -1,5 +1,7 @@
-import numpy as np
+from optimus import sqrt_modp
+from sympy import jacobi_symbol
 
+import random
 
 
 class EllipticCurve:
@@ -16,6 +18,17 @@ class EllipticCurve:
 
     def __repr__(self):
         return f"EllipticCurve: y^2 = x^3 + {self.a}x + {self.b} (mod {self.p})"
+
+
+    def rand_point(self):
+        while True:
+            X = random.randint(0, self.p - 1)
+            right = (pow(X, 3, self.p) + self.a * X + self.b) % self.p
+
+            if jacobi_symbol(right, self.p) == 1:
+                Y = sqrt_modp(right, self.p)
+
+                return EllipticCurvePoint(X, Y, 1, self)
 
 
     def is_on_curve(self, point):
